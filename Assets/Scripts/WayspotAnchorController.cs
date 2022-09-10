@@ -13,6 +13,7 @@ using Niantic.ARDK.LocationService;
 using Niantic.ARDK.AR.ARSessionEventArgs;
 using Niantic.ARDK.AR.Configuration;
 using Niantic.ARDK.Utilities;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class WayspotAnchorController : MonoBehaviour
@@ -35,20 +36,32 @@ public Camera _camera; // the ARDK's AR camera instead of the default Unity came
     public Slider rotationUpdate;
     public IWayspotAnchor[] anchors;
 
+
+    public UnityEvent OnAnchorLocalized;
     /* 
      * Unity Event Lifecycle Functions
      * Learn more: https://docs.unity3d.com/Manual/ExecutionOrder.html
      */
 
-    // When our app is enabled, register the OnSessionInitiliazed method to
-    // ARDK's SessionInialized event handler
-    private void OnEnable()
+    public void BeginARSession()
     {
         if (!PlayerPrefs.HasKey(LocalSaveKey))
         {
             PlayerPrefs.SetString(LocalSaveKey, waypoint);
         }
         ARSessionFactory.SessionInitialized += OnSessionInitialized;
+    }
+
+    public void CloseARSession()
+    {
+        ARSessionFactory.SessionInitialized -= OnSessionInitialized;
+    }
+    
+    // When our app is enabled, register the OnSessionInitiliazed method to
+    // ARDK's SessionInialized event handler
+    private void OnEnable()
+    {
+        
     }
     
     // Listen for touch events only if the app has localized to a VPS Wayspot
@@ -66,7 +79,7 @@ public Camera _camera; // the ARDK's AR camera instead of the default Unity came
     // Deregister the SessionInitiliazed method to ensure AR Session is terminated between sessions
     private void OnDisable()
     {
-        ARSessionFactory.SessionInitialized -= OnSessionInitialized;
+       
     }
 
     /*
@@ -131,6 +144,7 @@ public Camera _camera; // the ARDK's AR camera instead of the default Unity came
         else if (args.State == LocalizationState.Localized)
         {
             LoadLocalWayspotAnchors();
+            OnAnchorLocalized?.Invoke();
         }
     }
 
