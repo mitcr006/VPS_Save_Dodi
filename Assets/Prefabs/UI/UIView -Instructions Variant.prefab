@@ -1,5 +1,81 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6328450444175069591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1611135710927440280}
+  - component: {fileID: 6393551791492967571}
+  - component: {fileID: 1164620377851363716}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1611135710927440280
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328450444175069591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2392227376259658567}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -109}
+  m_SizeDelta: {x: 210.92, y: 210.9172}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &6393551791492967571
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328450444175069591}
+  m_CullTransparentMesh: 1
+--- !u!114 &1164620377851363716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328450444175069591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5386447f787a549aca5f758bde0a74c8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8369146233609826985
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,8 +111,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -500}
-  m_SizeDelta: {x: -100, y: 800}
+  m_AnchoredPosition: {x: 0, y: -593}
+  m_SizeDelta: {x: -100, y: 442.5}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7879641743653724818
 CanvasRenderer:
@@ -66,17 +142,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1) Keep Doty Alive!
-
-
-    2) Pick up the body parts and put them back
-
-
-    3)
-    Quicker the better!'
+  m_text: "Doty the Yeti\u2019s in big trouble - he\u2019s completely going to pieces!\n\nDoty
+    really needs his heart, liver and brain but they\u2019ve fallen out. \n\nPick
+    them all up and put them back in before Dody\u2019s spirit completely leaves
+    his body and he dies."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0a81e1e0e0edf47bd85b159f61ef54c2, type: 2}
+  m_sharedMaterial: {fileID: 6208314327326064072, guid: 0a81e1e0e0edf47bd85b159f61ef54c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -100,8 +172,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57.3
-  m_fontSizeBase: 57.3
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -223,7 +295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3517819526267316565, guid: 6a840ed259d6e45a7a53af4ada41f904, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -199.99988
+      value: -368
       objectReference: {fileID: 0}
     - target: {fileID: 3517819526267316565, guid: 6a840ed259d6e45a7a53af4ada41f904, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -239,7 +311,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3517819526267316570, guid: 6a840ed259d6e45a7a53af4ada41f904, type: 3}
       propertyPath: m_text
-      value: INSTRUCTIONS
+      value: DO LET DOTY DIE
+      objectReference: {fileID: 0}
+    - target: {fileID: 3517819526267316570, guid: 6a840ed259d6e45a7a53af4ada41f904, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3517819526267316570, guid: 6a840ed259d6e45a7a53af4ada41f904, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a840ed259d6e45a7a53af4ada41f904, type: 3}
@@ -337,6 +417,10 @@ PrefabInstance:
     - target: {fileID: 399955336464195019, guid: 3b1f9492c876b4650bb633405d2de568, type: 3}
       propertyPath: m_Name
       value: ButtonBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 399955336500827718, guid: 3b1f9492c876b4650bb633405d2de568, type: 3}
+      propertyPath: m_text
+      value: LETS GO!
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b1f9492c876b4650bb633405d2de568, type: 3}
@@ -455,10 +539,61 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6899508108832811311, guid: 5486d904e806d4ef4a2f272193cffa22, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5486d904e806d4ef4a2f272193cffa22, type: 3}
 --- !u!224 &2392227376259658567 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6899508108832811310, guid: 5486d904e806d4ef4a2f272193cffa22, type: 3}
   m_PrefabInstance: {fileID: 9118975667353148009}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2392227376259658584 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6899508108832811313, guid: 5486d904e806d4ef4a2f272193cffa22, type: 3}
+  m_PrefabInstance: {fileID: 9118975667353148009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4258782072600384856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2392227376259658584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f1c5417c9d7ab4b84e531f83f60a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 3f91331724a9da84197e9b6d94f0483c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+  borderWidth: 0
+  falloffDistance: 1
+--- !u!114 &7194579468774467309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2392227376259658584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8714c362c0c8a6449a9559a31cdab9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 20
