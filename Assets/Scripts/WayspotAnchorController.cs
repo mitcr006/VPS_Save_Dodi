@@ -17,20 +17,23 @@ using UnityEngine.UI;
 
 public class WayspotAnchorController : MonoBehaviour
 {
-    /*
-     * Global variables
-     * These sets of variables are used either to display content on the screen,
-     * or for accessing ARDK features across methods.
-     */
-    
-    public Camera _camera; // the ARDK's AR camera instead of the default Unity camera
+/*
+ * Global variables
+ * These sets of variables are used either to display content on the screen,
+ * or for accessing ARDK features across methods.
+ */
+
+public Camera _camera; // the ARDK's AR camera instead of the default Unity camera
     public GameObject _objectPrefab; // the prefab we will be spawning on screen
     public Text _statusLog; // updates the status log for Wayspot Anchors on screen
     public Text _localizationStatus; // updates the localization status message on screen
     
     private string LocalSaveKey = "my_wayspots"; // key used to store anchors locally
+    private string waypoint = "{\"Payloads\":[\"ChUI8pbH+5DGlomvARCo0JTc4qTsxC8YgODnpL0JKkQKFAi1qIXhk9bepisQn5+Zp7nck/cwEicKDw17g0q/FewCsT8duOIpQBIUDdQuQ7wV5CeyPx3u6188JS2V3D8dAACAPypFChUIx/393PGypqHUARCW9+W27s2tyRISJwoPDbh0ET4VJmiFPx1m14BAEhQNcgJxvBWQVw5AHTTnozwl2yeePx0AAIA/KkQKFAjP0Y7klLOMp0QQiufV2pnotrJcEicKDw3XrEi/FTB0sD8dsIgpQBIUDdVwSbwVuaSyPx0BRiM8Jd9U3D8dAACAPypGChYIiILYnvKr4qOJARCS/Zf0lPGP77cBEicKDw2Fkk+/FWXprz8dH+goQBIUDRZ+jrwVtRazPx0oHl88JSUY3D8dAACAPw==\"]}";
     private IARSession _arSession; // the AR session started by ARDK
     private WayspotAnchorService _wayspotAnchorService; // controls VPS features used
+    public Slider rotationUpdate;
+    public IWayspotAnchor[] anchors;
 
     /* 
      * Unity Event Lifecycle Functions
@@ -41,6 +44,10 @@ public class WayspotAnchorController : MonoBehaviour
     // ARDK's SessionInialized event handler
     private void OnEnable()
     {
+        if (!PlayerPrefs.HasKey(LocalSaveKey))
+        {
+            PlayerPrefs.SetString(LocalSaveKey, waypoint);
+        }
         ARSessionFactory.SessionInitialized += OnSessionInitialized;
     }
     
@@ -73,7 +80,8 @@ public class WayspotAnchorController : MonoBehaviour
         var anchors = _wayspotAnchorService.CreateWayspotAnchors(poseData); if (anchors.Length == 0) return;
         // get data for game object
         var position = poseData.ToPosition();
-        var rotation = poseData.ToRotation(); CreateWayspotAnchorGameObject(anchors[0], position, rotation); _statusLog.text = "Anchor placed.";
+        var rotation = poseData.ToRotation();
+        CreateWayspotAnchorGameObject(anchors[0], position, rotation); _statusLog.text = "Anchor placed.";
     }
 
     // Create and attach the game object prefab to the wayspot anchor
@@ -115,22 +123,27 @@ public class WayspotAnchorController : MonoBehaviour
 
     private void OnLocalizationStateUpdated(LocalizationStateUpdatedArgs args)
     {
-        _localizationStatus.text = args.State.ToString(); if (args.State == LocalizationState.Failed)
+        _localizationStatus.text = args.State.ToString();
+        if (args.State == LocalizationState.Failed)
         {
             _statusLog.text = args.FailureReason.ToString();
+        }
+        else if (args.State == LocalizationState.Localized)
+        {
+            LoadLocalWayspotAnchors();
         }
     }
 
     // Process the touch to see if it falls on a horizontal plane
     private void OnTouchScreen(Touch touch)
     {
-        var currentFrame = _arSession.CurrentFrame;
-        if (currentFrame == null) return;
-        var hitTestResults = currentFrame.HitTest(_camera.pixelWidth, _camera.pixelHeight, touch.position, ARHitTestResultType.EstimatedHorizontalPlane); if (hitTestResults.Count <= 0) return;
-        var position = hitTestResults[0].WorldTransform.ToPosition();
-        var rotation = Quaternion.Euler(new Vector3(0, UnityEngine.Random.Range(0, 360)));
-        Matrix4x4 poseData = Matrix4x4.TRS(position, rotation, _objectPrefab.transform.localScale);
-        PlaceAnchor(poseData);
+            var currentFrame = _arSession.CurrentFrame;
+            if (currentFrame == null) return;
+            var hitTestResults = currentFrame.HitTest(_camera.pixelWidth, _camera.pixelHeight, touch.position, ARHitTestResultType.EstimatedHorizontalPlane); if (hitTestResults.Count <= 0) return;
+            var position = hitTestResults[0].WorldTransform.ToPosition();
+            var rotation = Quaternion.Euler(new Vector3(0, rotationUpdate.value));
+            Matrix4x4 poseData = Matrix4x4.TRS(position, rotation, _objectPrefab.transform.localScale);
+            PlaceAnchor(poseData);
     }
 
     /*
@@ -157,23 +170,32 @@ public class WayspotAnchorController : MonoBehaviour
             foreach (var wayspotAnchorPayload in storedAnchorsData.Payloads)
             {
                 var payload = WayspotAnchorPayload.Deserialize(wayspotAnchorPayload);
-                var anchors = _wayspotAnchorService.RestoreWayspotAnchors(payload); if (anchors.Length == 0)
+                anchors = _wayspotAnchorService.RestoreWayspotAnchors(payload); if (anchors.Length == 0)
                     return;
                 var position = anchors[0].LastKnownPosition;
                 var rotation = anchors[0].LastKnownRotation; CreateWayspotAnchorGameObject(anchors[0], position, rotation);
             }
         }
         else
-        {
-            _statusLog.text = "No key found";
-        }
+    {
+        _statusLog.text = "No key found";
+}
 
     }
 
     // Stretch goal: Clear local Wayspot Anchor cache
     public void ClearLocalWasyspotAnchors()
     {
-        
+
+        IWayspotAnchor[] wayspotAnchors = _wayspotAnchorService.GetAllWayspotAnchors();
+        _wayspotAnchorService.DestroyWayspotAnchors(wayspotAnchors);
+
+        anchors = new IWayspotAnchor[0];
+
+        if (PlayerPrefs.HasKey(LocalSaveKey))
+        {
+            PlayerPrefs.DeleteKey(LocalSaveKey);
+        }
     }
 
     // Stretch goal: Restart wayspot anchor service
