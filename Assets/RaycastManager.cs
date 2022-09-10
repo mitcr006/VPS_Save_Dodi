@@ -9,7 +9,7 @@ public class RaycastManager : MonoBehaviour
     [SerializeField]
     private Transform snapToPoint;
 
-    private GameObject organ;
+    public GameObject organ;
 
     void Update()
     {
