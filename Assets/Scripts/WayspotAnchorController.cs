@@ -36,12 +36,18 @@ public Camera _camera; // the ARDK's AR camera instead of the default Unity came
     public Slider rotationUpdate;
     public IWayspotAnchor[] anchors;
 
+    public void Start()
+    {
+        BeginARSession();
+    }
 
     public UnityEvent OnAnchorLocalized;
     /* 
      * Unity Event Lifecycle Functions
      * Learn more: https://docs.unity3d.com/Manual/ExecutionOrder.html
      */
+
+
 
     public void BeginARSession()
     {
@@ -68,12 +74,6 @@ public Camera _camera; // the ARDK's AR camera instead of the default Unity came
     void Update()
     {
         if (_wayspotAnchorService == null || _wayspotAnchorService.LocalizationState != LocalizationState.Localized) return;
-        if (PlatformAgnosticInput.touchCount <= 0) return; var touch = PlatformAgnosticInput.GetTouch(0);
-        if (touch.IsTouchOverUIObject()) return;
-        if (touch.phase == TouchPhase.Began)
-        {
-            OnTouchScreen(touch);
-        }
     }
 
     // Deregister the SessionInitiliazed method to ensure AR Session is terminated between sessions
@@ -146,18 +146,6 @@ public Camera _camera; // the ARDK's AR camera instead of the default Unity came
             LoadLocalWayspotAnchors();
             OnAnchorLocalized?.Invoke();
         }
-    }
-
-    // Process the touch to see if it falls on a horizontal plane
-    private void OnTouchScreen(Touch touch)
-    {
-            var currentFrame = _arSession.CurrentFrame;
-            if (currentFrame == null) return;
-            var hitTestResults = currentFrame.HitTest(_camera.pixelWidth, _camera.pixelHeight, touch.position, ARHitTestResultType.EstimatedHorizontalPlane); if (hitTestResults.Count <= 0) return;
-            var position = hitTestResults[0].WorldTransform.ToPosition();
-            var rotation = Quaternion.Euler(new Vector3(0, rotationUpdate.value));
-            Matrix4x4 poseData = Matrix4x4.TRS(position, rotation, _objectPrefab.transform.localScale);
-            PlaceAnchor(poseData);
     }
 
     /*

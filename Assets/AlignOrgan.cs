@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GHOST.UI;
 using UnityEngine;
 
 public class AlignOrgan : MonoBehaviour
@@ -11,6 +12,8 @@ public class AlignOrgan : MonoBehaviour
     public AudioClip inPlace;
 
     public RaycastManager rayManager;
+
+    public GhostlyTimer ghost;
 
     public void Start()
     {
@@ -31,6 +34,9 @@ public class AlignOrgan : MonoBehaviour
                 rayManager.organ = null;
                 GetComponent<AudioSource>().clip = inPlace;
                 GetComponent<AudioSource>().Play();
+                ghost.timeLeft += 5f;
+                ghost.gameObject.transform.position = new Vector3(ghost.gameObject.transform.position.x, ghost.gameObject.transform.position.y - 0.5f, ghost.gameObject.transform.position.z);
+                ghost.organsPlaced++;
             }
         }
         else if (liver)
@@ -45,6 +51,9 @@ public class AlignOrgan : MonoBehaviour
                 rayManager.organ = null;
                 GetComponent<AudioSource>().clip = inPlace;
                 GetComponent<AudioSource>().Play();
+                ghost.timeLeft += 5f;
+                ghost.gameObject.transform.position = new Vector3(ghost.gameObject.transform.position.x, ghost.gameObject.transform.position.y - 0.5f, ghost.gameObject.transform.position.z);
+                ghost.organsPlaced++;
             }
         }
         else if (brain)
@@ -58,6 +67,9 @@ public class AlignOrgan : MonoBehaviour
                 rayManager.organ = null;
                 GetComponent<AudioSource>().clip = inPlace;
                 GetComponent<AudioSource>().Play();
+                ghost.timeLeft += 5f;
+                ghost.gameObject.transform.position = new Vector3(ghost.gameObject.transform.position.x, ghost.gameObject.transform.position.y - 0.5f, ghost.gameObject.transform.position.z);
+                ghost.organsPlaced++;
             }
         }
     }

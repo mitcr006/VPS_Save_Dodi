@@ -10,10 +10,30 @@ namespace GHOST.UI
         [SerializeField] private UIViewAnimator uiViewAnimator;
 
         [SerializeField] private bool startVisible;
-        
-        
+
+        [SerializeField] private bool showEndUi;
+
         private RectTransform _rectTransform;
         private Vector2 _originPosition;
+
+        public GhostlyTimer ghost;
+
+        public bool endscreen;
+
+
+
+        public void Update()
+        {
+            if (ghost == null)
+            {
+                ghost = FindObjectOfType<GhostlyTimer>();
+            }
+
+            if (canvas.alpha == 0 && ghost.organsPlaced == 3 && endscreen)
+            {
+                ShowInstant();
+            }
+        }
 
         private void Awake()
         {
